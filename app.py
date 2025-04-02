@@ -12,10 +12,10 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-# Configuración más específica de CORS
+# Configuración de CORS para todas las rutas
 CORS(app, resources={
-    r"/api/*": {
-        "origins": ["http://localhost:3000", "https://*.vercel.app"],
+    r"/*": {
+        "origins": ["http://localhost:3000", "https://*.vercel.app", "https://*.railway.app"],
         "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type", "Accept"],
         "supports_credentials": True
@@ -30,11 +30,15 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def health_check():
-    return jsonify({"status": "healthy", "message": "API is running"})
+    response = jsonify({"status": "healthy", "message": "API is running"})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route('/health')
 def railway_health_check():
-    return jsonify({"status": "healthy", "message": "API is running"})
+    response = jsonify({"status": "healthy", "message": "API is running"})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route('/api/upload', methods=['POST'])
 def upload_file():
