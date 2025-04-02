@@ -29,14 +29,12 @@ if not os.path.exists(UPLOAD_FOLDER):
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
-def home():
-    return jsonify({
-        'message': 'API is running',
-        'endpoints': {
-            'upload': '/api/upload',
-            'generate-pdf': '/api/generate-pdf'
-        }
-    })
+def health_check():
+    return jsonify({"status": "healthy", "message": "API is running"})
+
+@app.route('/health')
+def railway_health_check():
+    return jsonify({"status": "healthy", "message": "API is running"})
 
 @app.route('/api/upload', methods=['POST'])
 def upload_file():
