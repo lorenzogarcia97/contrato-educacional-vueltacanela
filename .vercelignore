@@ -1,7 +1,15 @@
+# Backend files
 app.py
 requirements.txt
 Procfile
-railway.toml
 runtime.txt
+railway.toml
 uploads/
+*.docx
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+venv/
 start.bat 
