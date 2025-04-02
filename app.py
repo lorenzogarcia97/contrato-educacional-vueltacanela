@@ -15,7 +15,7 @@ app = Flask(__name__)
 # Configuración de CORS para todas las rutas
 CORS(app, resources={
     r"/*": {
-        "origins": ["http://localhost:3000", "https://*.vercel.app", "https://*.railway.app"],
+        "origins": "*",  # Permitir todos los orígenes en producción
         "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type", "Accept"],
         "supports_credentials": True
@@ -30,15 +30,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def health_check():
-    response = jsonify({"status": "healthy", "message": "API is running"})
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    return jsonify({"status": "healthy", "message": "API is running"})
 
 @app.route('/health')
 def railway_health_check():
-    response = jsonify({"status": "healthy", "message": "API is running"})
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    return jsonify({"status": "healthy", "message": "API is running"})
 
 @app.route('/api/upload', methods=['POST'])
 def upload_file():
@@ -205,4 +201,6 @@ def generate_pdf():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True) 
+    # Desactivar el modo debug en producción
+    debug = os.environ.get('FLASK_ENV') == 'development'
+    app.run(host='0.0.0.0', port=port, debug=debug) 
