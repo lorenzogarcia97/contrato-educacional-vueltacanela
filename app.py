@@ -22,11 +22,15 @@ CORS(app, resources={
     }
 })
 
-UPLOAD_FOLDER = 'uploads'
+# Configuración de la carpeta de uploads
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Configuración del puerto para Railway
+PORT = int(os.getenv('PORT', 5000))
 
 @app.route('/')
 def health_check():
@@ -200,7 +204,4 @@ def generate_pdf():
             logger.error(f"Error al limpiar archivos temporales: {str(e)}")
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    # Desactivar el modo debug en producción
-    debug = os.environ.get('FLASK_ENV') == 'development'
-    app.run(host='0.0.0.0', port=port, debug=debug) 
+    app.run(host='0.0.0.0', port=PORT) 
