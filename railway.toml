@@ -3,7 +3,7 @@ builder = "nixpacks"
 buildCommand = "pip install -r requirements.txt"
 
 [deploy]
-startCommand = "python app.py"
+startCommand = "gunicorn app:app --bind 0.0.0.0:$PORT"
 healthcheckPath = "/health"
 healthcheckTimeout = 60
 healthcheckInterval = 15
@@ -16,4 +16,5 @@ name = "contrato-educacional-backend"
 [env]
 FLASK_ENV = "production"
 FLASK_APP = "app.py"
-PYTHONUNBUFFERED = "1" 
+PYTHONUNBUFFERED = "1"
+PORT = "5000" 
