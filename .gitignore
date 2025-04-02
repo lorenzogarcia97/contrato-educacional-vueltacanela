@@ -54,8 +54,32 @@ ENV/
 *.swp
 *.swo
 
-# Environment variables
-.env
+# Logs
+*.log
 
-# Uploads folder
-/uploads 
+# Local development
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Frontend
+frontend/node_modules/
+frontend/build/
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Uploads
+uploads/
+*.docx
+*.pdf
+
+# OS
+Thumbs.db 
